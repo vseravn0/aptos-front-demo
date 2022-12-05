@@ -37,6 +37,7 @@ export default {
     '@nuxtjs/style-resources',
     'bootstrap-vue/nuxt',
     'nuxt-i18n',
+    'nuxt-clipboard',
     '@nuxtjs/axios',
   ],
   plugins: [

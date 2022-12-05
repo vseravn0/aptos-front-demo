@@ -33,19 +33,21 @@
         :style="{color: loaderColor}"
       />
     </slot>
-    <slot />
+    <slot v-else />
   </button>
 </template>
 <script lang="ts">
 import MainVue from '~/mixins/MainVue';
 
+// @vue/component
 export default MainVue.extend({
+  name: 'base-button',
   props: {
     mode: {
       type: String,
       default: 'default',
       validator(value:string) {
-        const available = ['default', 'danger', 'success'];
+        const available = ['default', 'danger', 'success', 'gray', 'secondary', 'tag'];
 
         return available.includes(value);
       },
@@ -108,9 +110,9 @@ export default MainVue.extend({
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
-  color: $main-text-color;
+  color: $white;
   text-decoration: none;
-  background: $default-btn-bg;
+  background: $black;
   border-radius: 14px;
   transition: 0.3s;
 
@@ -127,11 +129,12 @@ export default MainVue.extend({
   }
 
   &_disabled {
-    color: $disabled-btn-text;
+    color: $white;
     cursor: not-allowed;
-    background: $disabled-btn-bg;
-    border: $disabled-btn-border;
+    background: $black;
+    border: $gray;
     box-shadow: none;
+    opacity: 0.5;
   }
 
   &__outlined {
@@ -139,15 +142,26 @@ export default MainVue.extend({
     box-shadow: none;
 
     &_default {
-      border: 2px solid $default-btn-border;
+      color: $white;
+      border: 2px solid $green;
+
+      &:hover {
+        color: $white;
+        background: $black;
+      }
+
+      &:disabled {
+        color: $white;
+        background: inherit;
+      }
     }
 
     &_danger {
-      border: 2px solid $danger-btn-border;
+      border: 2px solid $danger-btn-bg;
     }
 
     &_success {
-      border: 2px solid $success-btn-border;
+      border: 2px solid $success-btn-bg;
     }
   }
 

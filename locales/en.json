@@ -28,5 +28,13 @@
     "required": "The {_field_} is required",
     "size": "The {_field_} field size must be less than {size}KB",
     "decimal": "The {_field_} field must contain only decimal values"
+  },
+  "common": {
+    "aptos": "Aptos",
+    "eth": "Ethereum",
+    "airdrop": "Airdrop"
+  },
+  "header": {
+    "connect-wallet": "Connect wallet"
   }
 }

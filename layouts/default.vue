@@ -1,9 +1,7 @@
 <template>
   <div class="primary">
     <div class="primary__template template">
-      <div class="template__header">
-        Header
-      </div>
+        <header-comp/>
       <div class="template__content">
         <nuxt />
       </div>
@@ -17,8 +15,12 @@
 </template>
 <script lang="ts">
 import MainVue from '~/mixins/MainVue';
+import Header from "~/components/Header/index.vue";
 
 export default MainVue.extend({
+  components:{
+    "header-comp": Header
+  },
   mounted() {
     this.SetLoader(true);
     setTimeout(() => {
@@ -34,7 +36,7 @@ export default MainVue.extend({
 
   &__template {
     display: grid;
-    grid-template-rows: 100px 1fr auto;
+    grid-template-rows: 80px 1fr auto;
     height: 100%;
   }
 }
@@ -49,6 +51,8 @@ export default MainVue.extend({
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @include container;
   }
 }
 </style>

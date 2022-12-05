@@ -23,6 +23,11 @@
   --validate-danger: #ff5252;
   --card-bg: #d3cece;
   --card-border: #e3e3e3;
+  --white: #fff;
+  --black: #202020;
+  --gray: #3c3c3c;
+  --green: rgb(9, 242, 195);
+  --green-gradient: linear-gradient(253.94deg, #09f2c3 8.37%, #15dce4 69.71%);
 
   &.dark-mode {
     --main-text-color: #fff;
@@ -49,5 +54,10 @@
     --validate-danger: #ff5252;
     --card-bg: #202020;
     --card-border: #3c3c3c;
+    --white: #fff;
+    --black: #202020;
+    --gray: #3c3c3c;
+    --green: rgb(9, 242, 195);
+    --green-gradient: linear-gradient(253.94deg, #09f2c3 8.37%, #15dce4 69.71%);
   }
 }

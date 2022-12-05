@@ -1,9 +1,10 @@
 @mixin container {
   width: 100%;
-  max-width: 1290px;
+  max-width: 1170px;
+  margin: 0 auto;
 
   @include _1400 {
-    max-width: 1286px;
+    max-width: 1170px;
   }
 
   @include _1300 {
