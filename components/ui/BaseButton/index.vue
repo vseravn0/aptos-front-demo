@@ -44,7 +44,7 @@ export default MainVue.extend({
     mode: {
       type: String,
       default: 'default',
-      validator(value) {
+      validator(value:string) {
         const available = ['default', 'danger', 'success'];
 
         return available.includes(value);
