@@ -242,23 +242,28 @@ export default MainVue.extend({
   .base-input {
     display: flex;
     flex-direction: column;
+
     &_described {
       height: 95px;
     }
     // &_invalid {
 
     // }
+
     &__label {
       font-size: 16px;
       line-height: 145%;
       color: $label;
     }
+
     &__feedback {
       min-height: 12px;
       font-size: 12px;
+
       &_valid {
         color: $validate-success;
       }
+
       &_invalid {
         color: $validate-danger;
       }
@@ -266,67 +271,81 @@ export default MainVue.extend({
   }
 
   .base-input-group {
+    display: flex;
     width: 100%;
     height: 46px;
-    display: flex;
-    background-color: $fields;
     color: $fields-text;
+    background-color: $fields;
+
     &_rounded {
       border-radius: 14px;
     }
+
     &_invalid {
       background-color: $fields;
       border: 1px solid $fields-border-danger;
     }
+
     &_valid {
       background-color: $fields;
     }
+
     &_focus {
+      color: $fields-text;
       background-color: $fields-focused;
       border: 1px solid $fields-border;
-      color: $fields-text;
     }
+
     &_disabled {
       background-color: $fields;
     }
+
     &__input {
       width: 100%;
       height: 100%;
       padding: 8px 15px;
       font-size: 16px;
       line-height: 23px;
+      background-color: $fields;
       border: none;
       outline: none;
-      background-color: $fields;
+
       &_rounded {
         border-radius: 14px;
       }
+
       &_invalid {
         background-color: $fields;
       }
+
       &_valid {
         background-color: $fields;
       }
+
       &:focus {
+        color: $fields-text;
         background-color: $fields-focused;
         border-color: $fields-border;
-        color: $fields-text;
       }
+
       &::placeholder {
         font-size: 16px;
         line-height: 23px;
         color: $fields-placeholeder-text;
       }
+
       &:disabled::placeholder {
         color: $fields-placeholeder-text;
       }
     }
+
     &__prepend {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100%;
     }
+
     &__prepend-icon {
       display: flex;
       align-items: center;
@@ -335,12 +354,14 @@ export default MainVue.extend({
       margin-left: 15px;
       font-size: 24px;
     }
+
     &__append {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100%;
     }
+
     &__append-icon {
       display: flex;
       align-items: center;

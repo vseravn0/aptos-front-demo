@@ -46,60 +46,73 @@ export default MainVue.extend({
 .header {
   display: flex;
   justify-content: center;
+
   &__container {
     @include container;
+
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     background: #91979c;
   }
+
   &__items {
     display: flex;
   }
+
   &__item {
+
     &:not(:last-child) {
       margin-right: 20px;
     }
   }
+
   @include _991 {
     z-index: 150;
+
     &__container {
-      max-width: 100%;
       position: fixed;
-      transition: .3s;
       top: 0;
-      bottom: 0;
       right: 0;
+      bottom: 0;
       left: -100%;
       flex-direction: column;
+      max-width: 100%;
       padding: 20px 10px;
+      transition: 0.3s;
+
       &_show {
         left: 0;
       }
     }
+
     &__items {
       flex-direction: column;
     }
   }
 }
+
 .primary {
   height: 100vh;
   overflow-y: auto;
+
   &__template {
-    height: 100%;
     display: grid;
     grid-template-rows: 100px 1fr auto;
+    height: 100%;
   }
 }
+
 .template {
   height: 100%;
   min-height: 100vh;
   overflow: auto;
+
   &__content {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
   }
 }
 </style>

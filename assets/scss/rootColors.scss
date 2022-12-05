@@ -1,61 +1,53 @@
 :root {
-  --main-text-color:                            #202020;
+  --main-text-color: #202020;
   // buttons
-  --default-btn-bg:                             linear-gradient(253.94deg, #09F2C3 8.37%, #15DCE4 69.71%);
-  --default-btn-border:                         #09F2C3;
-
-  --danger-btn-bg:                              #FF234B;
-  --danger-btn-border:                          #FF234B;
-
-  --success-btn-bg:                             #26D652;
-  --success-btn-border:                         #26D652;
-
-  --disabled-btn-bg:                            #C7C7C7;
-  --disabled-btn-border:                        #C7C7C7;
-  --disabled-btn-text:                          #ABABAB;
+  --default-btn-bg: linear-gradient(253.94deg, #09f2c3 8.37%, #15dce4 69.71%);
+  --default-btn-border: #09f2c3;
+  --danger-btn-bg: #ff234b;
+  --danger-btn-border: #ff234b;
+  --success-btn-bg: #26d652;
+  --success-btn-border: #26d652;
+  --disabled-btn-bg: #c7c7c7;
+  --disabled-btn-border: #c7c7c7;
+  --disabled-btn-text: #ababab;
 
   // input
-  --fields:                                     #eee7e7;
-  --fields-focused:                             #FFFFFF;
-  --fields-text:                                #151515;
-  --fields-placeholeder-text:                   #8F8F8F;
-  --fields-border:                              #C7C7C7;
-  --fields-botder-danger:                       #FF5252;
-  --label:                                      #585858;
-  --validate-success:                           #26D652;
-  --validate-danger:                            #FF5252;
-
-  --card-bg:                                    #d3cece;
-  --card-border:                                #E3E3E3;
+  --fields: #eee7e7;
+  --fields-focused: #fff;
+  --fields-text: #151515;
+  --fields-placeholeder-text: #8f8f8f;
+  --fields-border: #c7c7c7;
+  --fields-botder-danger: #ff5252;
+  --label: #585858;
+  --validate-success: #26d652;
+  --validate-danger: #ff5252;
+  --card-bg: #d3cece;
+  --card-border: #e3e3e3;
 
   &.dark-mode {
-    --main-text-color:                            #FFFFFF;
+    --main-text-color: #fff;
     // buttons
-    --default-btn-bg:                             linear-gradient(253.94deg, #09F2C3 8.37%, #15DCE4 69.71%);
-    --default-btn-border:                         #09F2C3;
-
-    --danger-btn-bg:                              #FF234B;
-    --danger-btn-border:                          #FF234B;
-
-    --success-btn-bg:                             #26D652;
-    --success-btn-border:                         #26D652;
-
-    --disabled-btn-bg:                            #C7C7C7;
-    --disabled-btn-border:                        #C7C7C7;
-    --disabled-btn-text:                          #ABABAB;
+    --default-btn-bg: linear-gradient(253.94deg, #09f2c3 8.37%, #15dce4 69.71%);
+    --default-btn-border: #09f2c3;
+    --danger-btn-bg: #ff234b;
+    --danger-btn-border: #ff234b;
+    --success-btn-bg: #26d652;
+    --success-btn-border: #26d652;
+    --disabled-btn-bg: #c7c7c7;
+    --disabled-btn-border: #c7c7c7;
+    --disabled-btn-text: #ababab;
 
     // input
-    --fields:                                     #585858;
-    --fields-focused:                             #585858;
-    --fields-text:                                #FFFFFF;
-    --fields-placeholeder-text:                   #8F8F8F;
-    --fields-border:                              #8F8F8F;
-    --fields-botder-danger:                       #FF5252;
-    --label:                                      #C7C7C758;
-    --validate-success:                           #26D652;
-    --validate-danger:                            #FF5252;
-
-    --card-bg:                                    #202020;
-    --card-border:                                #3C3C3C;
+    --fields: #585858;
+    --fields-focused: #585858;
+    --fields-text: #fff;
+    --fields-placeholeder-text: #8f8f8f;
+    --fields-border: #8f8f8f;
+    --fields-botder-danger: #ff5252;
+    --label: #c7c7c758;
+    --validate-success: #26d652;
+    --validate-danger: #ff5252;
+    --card-bg: #202020;
+    --card-border: #3c3c3c;
   }
 }

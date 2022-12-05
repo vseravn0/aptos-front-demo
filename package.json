@@ -10,6 +10,7 @@
     "lint": "eslint --ext .ts,.js,.vue",
     "lintfix": "eslint --ext .ts,.js,.vue --fix",
     "prepare": "husky install",
+    "lintcss": "stylelint --fix **/*.vue, **/*.scss",
     "pre-commit": "lint-staged"
   },
   "dependencies": {
@@ -49,6 +50,9 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-vue": "^8.6.0",
+    "stylelint": "13.10.0",
+    "stylelint-config-good-scss": "3.1.0",
+    "stylelint-webpack-plugin": "3.2.0",
     "husky": "7.0.2",
     "lint-staged": "12.4.0",
     "node-sass": "^4.14.1",

@@ -1,29 +1,33 @@
 @mixin btn-default {
-  outline: none;
+  width: 100%;
+  padding: 0;
+  color: #fff;
   background: none;
   border: none;
-  padding: 0;
-  width: 100%;
-  color: #FFFFFF;
-  transition: .3s;
+  outline: none;
+  transition: 0.3s;
+
   &:focus {
-    outline: none!important;
+    outline: none !important;
   }
 }
 
 @mixin btn-filter {
-  transition: .3s;
+  transition: 0.3s;
+
   &:hover {
-    -webkit-filter: brightness(.92) saturate(.92) hue-rotate(-4deg);
-    filter: brightness(.92) saturate(.92) hue-rotate(-4deg);
+    -webkit-filter: brightness(0.92) saturate(0.92) hue-rotate(-4deg);
+    filter: brightness(0.92) saturate(0.92) hue-rotate(-4deg);
   }
+
   &:active {
-    -webkit-filter: brightness(.84) saturate(.84) hue-rotate(-10deg);
-    filter: brightness(.84) saturate(.84) hue-rotate(-10deg);
+    -webkit-filter: brightness(0.84) saturate(0.84) hue-rotate(-10deg);
+    filter: brightness(0.84) saturate(0.84) hue-rotate(-10deg);
   }
+
   &:disabled {
-    background: #f3f3f3;
     color: #91979c;
+    background: #f3f3f3;
     filter: none;
   }
 }

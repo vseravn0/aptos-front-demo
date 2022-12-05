@@ -33,9 +33,9 @@ html {
 
 body {
   min-height: 100vh;
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
   margin: 0 !important;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
 }
 
 ul[class],
@@ -48,8 +48,8 @@ a:not([class]) {
 }
 
 img {
-  max-width: 100%;
   display: block;
+  max-width: 100%;
 }
 
 article > * + * {
@@ -69,10 +69,11 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   * {
+    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -87,7 +88,6 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-
 a:focus,
 button:focus,
 input:focus,
@@ -96,16 +96,19 @@ textarea:focus {
 }
 
 button {
-  cursor: pointer;
   padding: 0;
+  cursor: pointer;
   background: transparent;
-
 }
 
-button:focus, button:active, button {
-  /*border: none;*/
-  /*outline: none;*/
+button:focus,
+button:active,
+button {
+  /* border: none; */
+
+  /* outline: none; */
 }
+
 button {
   border: none;
   outline: none;

@@ -100,51 +100,59 @@ export default MainVue.extend({
 <style lang="scss" scoped>
 .base-btn {
   position: relative;
-  padding: 15px 20px;
-  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 46px;
+  padding: 15px 20px;
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
   color: $main-text-color;
-  transition: .3s;
+  text-decoration: none;
   background: $default-btn-bg;
   border-radius: 14px;
+  transition: 0.3s;
+
   &_success {
     background: $success-btn-bg;
   }
+
   &_danger {
     background: $danger-btn-bg;
   }
+
   &_loading {
     color: transparent;
   }
+
   &_disabled {
-    box-shadow: none;
+    color: $disabled-btn-text;
     cursor: not-allowed;
     background: $disabled-btn-bg;
     border: $disabled-btn-border;
-    color: $disabled-btn-text;
+    box-shadow: none;
   }
+
   &__outlined {
-     box-shadow: none;
-     background: transparent;
+    background: transparent;
+    box-shadow: none;
+
     &_default {
       border: 2px solid $default-btn-border;
     }
+
     &_danger {
       border: 2px solid $danger-btn-border;
     }
+
     &_success {
       border: 2px solid $success-btn-border;
     }
   }
+
   &__loader {
     position: absolute;
   }
-
 }
 </style>

@@ -92,38 +92,50 @@ export default MainVue.extend({
     background-clip: border-box;
     border: 1px solid $card-bg;
     border-radius: 10px;
+
     &_bg {
+
       &-default {
         background-color: $card-border;
       }
     }
+
     &__header {
       padding: 20px;
+
       &_border {
         border-bottom: 1px solid $card-bg;
       }
     }
+
     &__body {
       padding: 20px;
     }
+
     &__footer {
       padding: 20px;
       border-top: 1px solid $card-bg;
     }
+
     &__title {
       font-size: 18px;
       line-height: 22px;
       color: $main-text-color;
     }
   }
+
   @include _480 {
+
     .base-card {
+
       &__header {
         padding: 10px;
       }
+
       &__body {
         padding: 10px;
       }
+
       &__footer {
         padding: 10px;
       }

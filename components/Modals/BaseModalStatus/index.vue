@@ -19,10 +19,12 @@ export default MainVue.extend({
 </script>
 <style scoped lang="scss">
 .status {
+
   &__text {
     margin-bottom: 10px;
   }
 }
+
 .base-modal {
   @include modalKit;
 }

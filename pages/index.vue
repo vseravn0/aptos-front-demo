@@ -322,6 +322,7 @@ export default MainVue.extend({
 
 .transactions {
   margin-bottom: 10px;
+
   &__content {
     display: flex;
     align-items: center;

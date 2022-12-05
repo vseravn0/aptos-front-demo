@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from 'dotenv';
 import localeEn from './locales/en.json';
+import StyleLintPlugin from 'stylelint-webpack-plugin';
 
 dotenv.config();
 
@@ -54,11 +55,23 @@ export default {
       ],
     },
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    extend(config) {
+    extend(config, ctx) {
       // eslint-disable-next-line no-param-reassign
       config.node = {
         fs: 'empty',
       };
+      if (ctx.isDev && ctx.isClient) {
+        config.plugins.push(
+          new StyleLintPlugin({
+            configFile: 'stylelint.config.js',
+            exclude: ['.nuxt', 'node_modules'],
+            extensions: ['css', 'scss', 'sass', 'vue'],
+            fix: true,
+            quiet: false,
+            failOnError: false,
+          }),
+        );
+      }
     },
   },
   i18n: {

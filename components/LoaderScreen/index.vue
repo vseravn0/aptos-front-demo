@@ -29,86 +29,105 @@ export default MainVue.extend({
 <style lang="scss" scoped>
 
 .loader {
-  padding: 10px;
   position: fixed;
   top: 0;
-  bottom: 0;
   right: 0;
+  bottom: 0;
   left: 0;
-  background: rgba(#000000, .6);
   z-index: 1500;
+  display: flex;
   align-items: center;
   justify-content: center;
-  display: flex;
+  padding: 10px;
+  background: rgba(#000, 0.6);
+
   &_hider {
-    background: #FFFFFF;
+    background: #fff;
   }
+
   &__body {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   &__text {
-    background: #FAEEEB;
     padding: 1px 8px;
-    font-weight: bold;
     font-size: 12px;
-    color: #000000;
+    font-weight: bold;
+    color: #000;
+    background: #faeeeb;
     border-radius: 5px;
   }
 }
 
 .dots {
   padding-right: 10px;
-  &:after {
+
+  &::after {
     margin-left: -3px;
     content: ' .';
     animation: dots 1s steps(5, end) infinite;
   }
 }
 
-$dotsColor: #000000;
+$dotsColor: #000;
 
 @keyframes dots {
-  0%, 20% {
-    color: rgba(0,0,0,0);
+
+  0%,
+  20% {
+    color: rgba(0, 0, 0, 0);
     text-shadow:
-      .25em 0 0 rgba(0,0,0,0),
-      .5em 0 0 rgba(0,0,0,0);}
+      0.25em 0 0 rgba(0, 0, 0, 0),
+      0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
   40% {
     color: $dotsColor;
     text-shadow:
-      .25em 0 0 rgba(0,0,0,0),
-      .5em 0 0 rgba(0,0,0,0);}
+      0.25em 0 0 rgba(0, 0, 0, 0),
+      0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
   60% {
     text-shadow:
-      .25em 0 0 $dotsColor,
-      .5em 0 0 rgba(0,0,0,0);}
-  80%, 100% {
+      0.25em 0 0 $dotsColor,
+      0.5em 0 0 rgba(0, 0, 0, 0);
+  }
+
+  80%,
+  100% {
     text-shadow:
-      .25em 0 0 $dotsColor,
-      .5em 0 0 $dotsColor;}}
+      0.25em 0 0 $dotsColor,
+      0.5em 0 0 $dotsColor;
+  }
+}
 
 .lds-dual-ring {
   display: inline-block;
   width: 80px;
   height: 80px;
 }
-.lds-dual-ring:after {
-  content: " ";
+
+.lds-dual-ring::after {
   display: block;
   width: 64px;
   height: 64px;
   margin: 8px;
+  content: " ";
+  border: 6px solid #fff;
+  border-color: #fff transparent #faeeeb transparent;
   border-radius: 50%;
-  border: 6px solid #ffffff;
-  border-color: #ffffff transparent #FAEEEB transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
+
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
