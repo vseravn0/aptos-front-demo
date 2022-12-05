@@ -1,6 +1,8 @@
 import BigNumber from 'bignumber.js';
 import type { AbiItem } from 'web3-utils';
 import ConnectionWeb3 from '~/core/ConnectionWeb3';
+import Web3 from 'web3';
+import { ISignature } from '~/types/core';
 
 BigNumber.config({ EXPONENTIAL_AT: 60 });
 
@@ -122,4 +124,22 @@ export const subscribeToContractEvents = ({ abi, address }: eventPayload, cb: an
     console.log('err, data: ', err, data);
     cb(data);
   });
+};
+
+export const signData = async (web3: Web3, message: string, userAddress: string):
+  Promise<ISignature> => {
+  if (!message || !web3) {
+    throw error(400, 'signData fails, required arguments not received');
+  }
+  let signature;
+  const messageHash = web3.utils.soliditySha3(message);
+  if (messageHash) {
+    signature = await web3.eth.sign(messageHash, userAddress);
+    return ({
+      signature,
+      messageHash,
+    });
+  }
+  throw error(400, `signData fails, no message hash was returned on soliditySha3,
+                               check message for sign or constant config file`);
 };

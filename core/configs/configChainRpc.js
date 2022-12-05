@@ -100,6 +100,58 @@ export const methodAddRpcMatic = {
   }],
 };
 
+export const methodAddRpcAvalanche = {
+  method: 'wallet_addEthereumChain',
+  params: [
+    {
+      chainId: '0xA86A',
+      chainName: 'Avalanche Mainnet C-Chain',
+      nativeCurrency: {
+        name: 'Avalanche',
+        symbol: 'AVAX',
+        decimals: 18,
+      },
+      rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+      blockExplorerUrls: ['https://snowtrace.io/'],
+    },
+  ],
+};
+
+export const methodAddRpcAvalancheTestnet = {
+  method: 'wallet_addEthereumChain',
+  params: [
+    {
+      chainId: '0xA869',
+      chainName: 'Avalanche Testnet C-Chain',
+      nativeCurrency: {
+        name: 'Avalanche',
+        symbol: 'AVAX',
+        decimals: 18,
+      },
+      rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+      blockExplorerUrls: ['https://testnet.snowtrace.io/'],
+    },
+  ],
+};
+
+export const methodSwitchRpcAvalanche = {
+  method: 'wallet_switchEthereumChain',
+  params: [
+    {
+      chainId: '0xA86A',
+    },
+  ],
+};
+
+export const methodSwitchRpcAvalancheTestnet = {
+  method: 'wallet_switchEthereumChain',
+  params: [
+    {
+      chainId: '0xA869',
+    },
+  ],
+};
+
 export const networksChainsConfig = {
   [NETWORKS_SHORT_NAMES.ETH]: {
     testnet: {
@@ -127,6 +179,16 @@ export const networksChainsConfig = {
     mainnet: {
       switchChain: methodSwitchRpcMatic,
       addChain: methodAddRpcMatic,
+    },
+  },
+  [NETWORKS_SHORT_NAMES.AVAX]: {
+    testnet: {
+      switchChain: methodSwitchRpcAvalancheTestnet,
+      addChain: methodAddRpcAvalancheTestnet,
+    },
+    mainnet: {
+      switchChain: methodSwitchRpcAvalanche,
+      addChain: methodAddRpcAvalanche,
     },
   },
 };

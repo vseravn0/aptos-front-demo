@@ -252,8 +252,9 @@ export default MainVue.extend({
 
     &__label {
       font-size: 16px;
-      line-height: 145%;
-      color: $label;
+      font-weight: 400;
+      line-height: 20px;
+      color: $light-gray;
     }
 
     &__feedback {

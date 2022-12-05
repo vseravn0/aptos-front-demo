@@ -1,7 +1,7 @@
 <template>
   <div class="primary">
     <div class="primary__template template">
-        <header-comp/>
+      <header-comp/>
       <div class="template__content">
         <nuxt />
       </div>
@@ -37,6 +37,7 @@ export default MainVue.extend({
   &__template {
     display: grid;
     grid-template-rows: 80px 1fr auto;
+    gap: 30px 0;
     height: 100%;
   }
 }

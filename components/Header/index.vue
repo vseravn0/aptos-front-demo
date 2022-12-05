@@ -7,6 +7,9 @@
           <base-button>
             {{$t('common.airdrop')}}
           </base-button>
+          <base-button @click="aptos">
+            aptos
+          </base-button>
           <base-button>
             0
           </base-button>
@@ -36,6 +39,44 @@ export default MainVue.extend({
         logo: 'aptos',
         name: this.$tc('common.aptos')
       }
+    }
+  },
+  methods:{
+    async aptos():void{
+      const data = null;
+
+      const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+          console.log(this.responseText);
+        }
+      });
+
+      xhr.open("GET", "https://fullnode.testnet.aptoslabs.com/v1/accounts/0x81f23757db90614ec2598cf5012a42f96d357fd9778b22f44fd9c535dee3cb83");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.send(data);
+      // const response = await window.martian.connect();
+      // const sender = response.address;
+      // // claim
+      // // const payload = {
+      // //   function: "0x7612ebde3ecc5ef5ac9248011da4fd3bcbd695f645048e6f1fca8e1f91cade1a::Bridge::claim",
+      // //   type_arguments: ["0x7612ebde3ecc5ef5ac9248011da4fd3bcbd695f645048e6f1fca8e1f91cade1a::SupportedTokens::USDT"],
+      // //   arguments: []
+      // // };
+      // // view balance
+      // const payload = {
+      //     function: "0x7612ebde3ecc5ef5ac9248011da4fd3bcbd695f645048e6f1fca8e1f91cade1a::Bridge::get_credits",
+      //     type_arguments: ["0x7612ebde3ecc5ef5ac9248011da4fd3bcbd695f645048e6f1fca8e1f91cade1a::SupportedTokens::USDT"],
+      //     arguments: ['address']
+      // }
+      // const transaction = await window.martian.generateTransaction(sender,payload);
+      // console.log(transaction);
+      // const signedTxn = await window.martian.signTransaction(transaction);
+      // const txnHash = await window.martian.submitTransaction(signedTxn);
+      // console.log(txnHash);
     }
   }
 });

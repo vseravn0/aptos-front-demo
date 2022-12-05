@@ -1,5 +1,5 @@
 import type { GetterTree } from 'vuex/types/index';
-import { IWeb3V2State, ITokensMap, ITransactionsMap } from '~/store/web3/state';
+import {IWeb3V2State, ITokensMap, ITransactionsMap} from "~/types/store/web3";
 
 const getters: GetterTree<IWeb3V2State, IWeb3V2State> = {
   getIsConnected: (state): boolean => state.isConnected,

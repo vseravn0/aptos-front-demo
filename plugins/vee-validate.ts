@@ -33,3 +33,7 @@ export default ({ app }: Context): void => {
 extend('isAddress', {
   validate: (value) => Web3.utils.isAddress(value),
 });
+
+extend('greaterThanZero', {
+  validate: (value) => value > 0,
+});

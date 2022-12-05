@@ -1,21 +1,5 @@
-import Token, { ITransaction } from '~/core/contracts/Token';
 import { NETWORKS_MAINNET, NETWORKS_TESTNET } from '~/utils/constants';
-
-export interface ITokensMap {
-  [key: string]: Token;
-}
-
-export interface ITransactionsMap {
-  [key: string]: ITransaction
-}
-
-export interface IWeb3V2State {
-  isConnected: boolean,
-  chainId: number | string | null,
-  userAddress: string,
-  tokensMap: ITokensMap,
-  transactionsMap: any
-}
+import {IWeb3V2State} from "~/types/store/web3";
 
 export const initState = (): IWeb3V2State => ({
   isConnected: false,

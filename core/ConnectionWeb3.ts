@@ -1,11 +1,19 @@
 import Web3 from 'web3';
-import { error } from '~/core/helpers';
 import {
-  ANON_PROVIDERS_MAINNET, ANON_PROVIDERS_TESTNET, NETWORKS_MAINNET, NETWORKS_TESTNET,
+  error,
+  signData,
+} from '~/core/helpers';
+import {
+  ANON_PROVIDERS_MAINNET,
+  ANON_PROVIDERS_TESTNET,
+  MESSAGE_FOR_SIGN,
+  NETWORKS_MAINNET,
+  NETWORKS_TESTNET,
 } from '~/utils/constants';
 import {
   networksChainsConfig,
 } from '~/core/configs/configChainRpc';
+import { ISignature } from '~/types/core';
 
 declare global {
   interface Window {
@@ -26,6 +34,13 @@ export enum PROVIDER_INSTALL_ERROR {
   NO_COINBASE = 462,
 }
 
+export enum CHAINS_ERROR {
+  SWITCH_DENIED = 4001,
+  ADD_CHAIN_DENIED = 4002,
+  CHAIN_NOT_EXIST = 4902,
+  CANT_ADD_CHAIN = 4003,
+}
+
 let store: any;
 
 if (process.browser) {
@@ -39,8 +54,10 @@ export default class ConnectionWeb3 {
   web3Guest: any = null
   web3Wallet: any = null
   chainId: number | null = null
+  anonChainId: number | null = null
   isConnected = false
   userAddress = ''
+  supportedChainMap = null as any
 
   // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
   private constructor() {
@@ -60,14 +77,17 @@ export default class ConnectionWeb3 {
 
   // Метод для анонимного подключения к ноде
   public connectAnonProvider(chainId: number): void {
+    this.anonChainId = chainId;
+
     const providersUrl = JSON.parse(`${process.env.IS_MAINNET}`) ? ANON_PROVIDERS_MAINNET : ANON_PROVIDERS_TESTNET;
 
     const provider = new Web3.providers.HttpProvider(providersUrl[chainId]);
+
     this.web3Guest = new Web3(provider);
   }
 
   // Подключение к кошельку metamask/coinbase
-  public async connectWallet(defaultChain: number, type = 'metamask') : Promise<void> {
+  public async connectWallet(defaultChain: number, type = 'metamask', supportedChainMap = null) : Promise<void> {
     const currentProvider = ConnectionWeb3.getEthereumProvider(type);
 
     try {
@@ -91,23 +111,28 @@ export default class ConnectionWeb3 {
       ]);
       this.isConnected = true;
 
+      const isMainnet = process.env.IS_MAINNET === 'true';
+      if (supportedChainMap) {
+        this.supportedChainMap = supportedChainMap;
+      } else {
+        this.supportedChainMap = isMainnet ? NETWORKS_MAINNET : NETWORKS_TESTNET;
+      }
+
       if (this.chainId !== defaultChain) {
-        await this.changeCurrentMMChain(defaultChain, type);
+        this.chainId = await this.changeCurrentMMChain(defaultChain, type);
       }
     } catch (err) {
       console.log('CONNECTION ERR: ', err);
       this.disconnect();
+      throw err;
     }
   }
 
   // Переключение сетей в метамаске с использованием api метамаска
-  public async changeCurrentMMChain(tragetChainID: number, type = 'metamask'): Promise<any> {
+  public async changeCurrentMMChain(tragetChainID: number, type = 'metamask'): Promise<number | null> {
     const currentProvider = ConnectionWeb3.getEthereumProvider(type);
     const isMainnet = process.env.IS_MAINNET === 'true';
-    const blockchainName = isMainnet
-      ? NETWORKS_MAINNET[tragetChainID]
-      : NETWORKS_TESTNET[tragetChainID];
-
+    const blockchainName = this.supportedChainMap[tragetChainID];
     // сигнатура для метода переключения сети в метамаске
     const switchRpcMethod = isMainnet
       ? networksChainsConfig[blockchainName].mainnet.switchChain
@@ -116,30 +141,29 @@ export default class ConnectionWeb3 {
     const addRpcMethod = isMainnet
       ? networksChainsConfig[blockchainName].mainnet.addChain
       : networksChainsConfig[blockchainName].testnet.addChain;
-
-    if (this.chainId !== +tragetChainID) {
+    if (this.chainId !== tragetChainID) {
       try {
         await currentProvider.request(switchRpcMethod);
       } catch (switchError) {
-        if ((switchError as ProviderRpcError).code === 4902) {
+        if ((switchError as ProviderRpcError).code === CHAINS_ERROR.CHAIN_NOT_EXIST) {
           try {
             await currentProvider.request(addRpcMethod);
           } catch (addError) {
-            throw error(400, 'chain connection error');
+            throw error(CHAINS_ERROR.ADD_CHAIN_DENIED, 'chain connection error', addError);
           }
         }
 
-        if ((switchError as ProviderRpcError).code === 4001) {
-          throw error(4001, 'user denied transaction');
+        if ((switchError as ProviderRpcError).code === CHAINS_ERROR.SWITCH_DENIED) {
+          throw error(CHAINS_ERROR.SWITCH_DENIED, 'user denied transaction', switchError);
         }
 
         if (!addRpcMethod) {
-          throw error(400, 'chain connection error');
+          throw error(CHAINS_ERROR.CANT_ADD_CHAIN, 'chain connection error');
         }
       }
     }
 
-    this.chainId = await this.web3Wallet.eth.net.getId();
+    return await this.web3Wallet.eth.net.getId();
   }
 
   private static getEthereumProvider(type: string): any {
@@ -184,24 +208,23 @@ export default class ConnectionWeb3 {
   }
 
   // отписка от ивентов метамаска
-  private disconnect = (type = 'metamask'): void => {
+  private clearListeners = (type = 'metamask'): void => {
     const currentProvider = ConnectionWeb3.getEthereumProvider(type);
-
     currentProvider.removeListener('chainChanged', this.handleChainChanged);
     currentProvider.removeListener('accountsChanged', this.handleAccountsChanged);
-    store.commit('web3/DISCONNECT_WALLET');
   }
 
   // функция обработчик для ивента переключения сети chainChanged
   // Должна быть стрелочной функцией воизбежание потери this
   private handleChainChanged = (chainId: string, type = 'metamask'): void => {
-    console.log('handleChainChanged chainId: ', chainId);
-    const { IS_MAINNET } = process.env;
+    console.log('handleChainChanged chainId: ', +chainId);
+    console.log('this.chainId: ', this.chainId, this);
     if (+chainId !== this.chainId) {
-      if ((IS_MAINNET === 'false' && NETWORKS_TESTNET[+chainId]) || (IS_MAINNET === 'true' && NETWORKS_MAINNET[+chainId])) {
+      if (this.supportedChainMap[+chainId]) {
         this.chainId = +chainId;
+        this.anonChainId = +chainId;
         store.commit('web3/SET_CHAIN_ID', +chainId);
-        // await this.connectWallet(chainId)
+        store.dispatch('web3/connectNode', +chainId);
       } else {
         /* Здесь можно дать юзеру выбрать оставаться в неподдерживаемой сети
           или же вернуться на какую то из поддерживаемых. Если выбирает остаться в неподдерживаемой
@@ -222,6 +245,29 @@ export default class ConnectionWeb3 {
       store.commit('web3/SET_USER_ADDRESS', this.userAddress);
     } else {
       this.disconnect();
+    }
+  }
+
+  public disconnect(type = 'metamask'): void {
+    this.chainId = null;
+    this.userAddress = '';
+    this.isConnected = false;
+    this.web3Wallet = null;
+    this.clearListeners(type);
+    store.commit('web3/DISCONNECT_WALLET');
+  }
+
+  public async getSignature(): Promise<ISignature> {
+    const msg = MESSAGE_FOR_SIGN.USER_DATA;
+    if (!this.web3Wallet) {
+      throw error(400, 'Connect wallet first');
+    }
+    try {
+      const { messageHash, signature } = await signData(this.web3Wallet, msg, this.userAddress);
+      return ({ messageHash, signature });
+    } catch (e) {
+      this.disconnect();
+      throw e;
     }
   }
 }

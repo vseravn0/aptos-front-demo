@@ -1,7 +1,7 @@
 import type { MutationTree } from 'vuex/types/index';
 import ConnectionWeb3 from '~/core/ConnectionWeb3';
 import { ITransaction } from '~/core/contracts/Token';
-import { IWeb3V2State, ITokensMap } from '~/store/web3/state';
+import {IWeb3V2State, ITokensMap} from "~/types/store/web3";
 
 const mutations: MutationTree<IWeb3V2State> = {
   SET_IS_CONNECTED: (state, payload: boolean) => {

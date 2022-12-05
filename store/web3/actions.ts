@@ -2,7 +2,7 @@ import type { ActionTree } from 'vuex/types/index';
 import BigNumber from 'bignumber.js';
 import ConnectionWeb3 from '~/core/ConnectionWeb3';
 import Token, { ITransaction } from '~/core/contracts/Token';
-import { IWeb3V2State, ITokensMap } from '~/store/web3/state';
+import {IWeb3V2State, ITokensMap} from "~/types/store/web3";
 
 const actions: ActionTree<IWeb3V2State, IWeb3V2State> = {
   connectNode({ getters }) {
@@ -14,7 +14,6 @@ const actions: ActionTree<IWeb3V2State, IWeb3V2State> = {
     const connection = ConnectionWeb3.getInstance();
     const chainId = getters.getChainId;
     await connection.connectWallet(chainId, 'metamask');
-
     commit('SET_USER_ADDRESS', connection.userAddress);
     commit('SET_CHAIN_ID', connection.chainId);
     commit('SET_IS_CONNECTED', connection.isConnected);

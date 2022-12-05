@@ -38,9 +38,31 @@ export default class BasicContract {
     return createContractWalletInstance(this.abi, this.address);
   }
 
+  getAnonInstance(): any {
+    if (!contractsManager.anonContractsMap[this.address]) {
+      contractsManager.addContractToAnonMap(
+        this.address,
+        this.createContractAnonInstance(),
+      );
+    }
+
+    return contractsManager.anonContractsMap[this.address];
+  }
+
+  getWalletInstance(): any {
+    if (!contractsManager.walletContractsMap[this.address]) {
+      contractsManager.addContractToWalletMap(
+        this.address,
+        this.createContractWalletInstance(),
+      );
+    }
+
+    return contractsManager.walletContractsMap[this.address];
+  }
+
   async fetchContractData(method: string, params?: Array<string>): Promise<any> {
     try {
-      const contract = contractsManager.anonContractsMap[this.address];
+      const contract = this.getAnonInstance();
       return await contract.methods[method].apply(this, params).call();
     } catch (err) {
       throw error(500, 'fetch contract error', err);
@@ -49,7 +71,7 @@ export default class BasicContract {
 
   async fetchContractDataByWallet(method: string, params?: Array<string>): Promise<any> {
     try {
-      const contract = contractsManager.walletContractsMap[this.address];
+      const contract = this.getWalletInstance();
       return await contract.methods[method].apply(this, params).call();
     } catch (err) {
       throw error(500, 'fetch contract error', err);
@@ -62,7 +84,7 @@ export default class BasicContract {
     userAddress: string,
   ): Promise<any> {
     try {
-      const instance: any = contractsManager.walletContractsMap[this.address];
+      const instance: any = this.getWalletInstance();
       return await instance.methods[method].apply(this, params).send({ from: userAddress });
     } catch (err) {
       throw error(400, 'contract error', err);
@@ -80,7 +102,7 @@ export default class BasicContract {
     eventName: string,
     options: IEventOptions = {},
   ): void {
-    const instance = createContractWalletInstance(this.abi, this.address);
+    const instance = this.createContractWalletInstance();
     // const filter = {
     //   sender: [userAddress]
     // }

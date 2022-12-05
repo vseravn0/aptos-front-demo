@@ -1,108 +1,83 @@
+<template>
+    <validation-observer
+      v-slot="{ handleSubmit }"
+      ref="observer"
+      class="bridge-form"
+      tag="div"
+    >
+      <form class="bridge-form__form" id="bridge-form" @submit.prevent="handleSubmit(sendBridgeForm)">
+        <span class="bridge-form__title">{{$t('bridge-page.bridge-form.title')}}</span>
+        <div class="bridge-form__inputs">
+          <base-input v-model="recipientAddress"
+                      :name="$t('bridge-page.bridge-form.inputs.recipient.name')"
+                      :label="$t('bridge-page.bridge-form.inputs.recipient.title')"
+                      :placeholder="$t('bridge-page.bridge-form.inputs.recipient.placeholder')"
+                      :rules="'required'"
+                      rounded="true"/>
+          <base-input v-model="amount"
+                      :name="$t('bridge-page.bridge-form.inputs.amount.name')"
+                      :label="$t('bridge-page.bridge-form.inputs.amount.title')"
+                      :rules="'required|numeric|greaterThanZero|min_value:1|max_value:365'"
+                      :placeholder="$t('bridge-page.bridge-form.inputs.amount.placeholder')"
+                      rounded="true"/>
+        </div>
+        <base-button
+          form="bridge-form"
+          type="submit"
+          :loading="isLoading"
+          :loader-color="loaderColor"
+          :disabled="isLoading"
+          :outlined="true"
+        >
+          {{ $t('common.swap') }}
+        </base-button>
+      </form>
+  </validation-observer>
+</template>
 
 
-<!--<template>-->
-<!--  <validation-observer-->
-<!--    v-slot="{ handleSubmit }"-->
-<!--    ref="observer"-->
-<!--    class="contact-form"-->
-<!--    tag="div"-->
-<!--  >-->
-<!--    <form-->
-<!--      id="contact-form"-->
-<!--      class="contact-form__form"-->
-<!--      @submit.prevent="handleSubmit(sendContactUsForm)"-->
-<!--    >-->
-<!--      <div class="contact-form__inputs">-->
-<!--        <base-input-->
-<!--          v-model="userName"-->
-<!--          :name="$t('contactPage.contactForm.inputs.name.name')"-->
-<!--          :label="$t('contactPage.contactForm.inputs.name.title')"-->
-<!--          :placeholder="$t('contactPage.contactForm.inputs.name.placeholder')"-->
-<!--          :rules="'required|alpha|min:4|max:50'"-->
-<!--          :rounded="true"-->
-<!--        />-->
-<!--        <base-input-->
-<!--          v-model="userCompany"-->
-<!--          :name="$t('contactPage.contactForm.inputs.company.name')"-->
-<!--          :label="$t('contactPage.contactForm.inputs.company.title')"-->
-<!--          :placeholder="$t('contactPage.contactForm.inputs.company.placeholder')"-->
-<!--          :rules="'min:2|max:50'"-->
-<!--          :rounded="true"-->
-<!--        />-->
-<!--        <base-input-->
-<!--          v-model="userEmail"-->
-<!--          :name="$t('contactPage.contactForm.inputs.email.name')"-->
-<!--          :label="$t('contactPage.contactForm.inputs.email.title')"-->
-<!--          :placeholder="$t('contactPage.contactForm.inputs.email.placeholder')"-->
-<!--          :rules="'required|email|min:4|max:50'"-->
-<!--          :rounded="true"-->
-<!--        />-->
-<!--        <base-textarea-->
-<!--          v-model="userDesc"-->
-<!--          :name="$t('contactPage.contactForm.textareas.desc.name')"-->
-<!--          :label="$t('contactPage.contactForm.textareas.desc.title')"-->
-<!--          :placeholder="$t('contactPage.contactForm.textareas.desc.placeholder')"-->
-<!--          :rules="'required|min:20|max:200'"-->
-<!--          :rounded="true"-->
-<!--        />-->
-<!--        <base-checkbox-->
-<!--          v-model="isAgree"-->
-<!--          class="contact-form__checkbox"-->
-<!--        >-->
-<!--          <p class="contact-form__text">-->
-<!--            {{ $t('contactPage.contactForm.privacy.text') }}-->
-<!--            <span class="contact-form__text_purple">-->
-<!--              {{ $t('contactPage.contactForm.privacy.privacy') }}</span>-->
-<!--            {{ $t('common.and') }} <span class="contact-form__text_purple">-->
-<!--              {{ $t('contactPage.contactForm.privacy.cookie') }}</span> .-->
-<!--          </p>-->
-<!--        </base-checkbox>-->
-<!--      </div>-->
-<!--      <base-button-->
-<!--        form="contact-form"-->
-<!--        type="submit"-->
-<!--        :loading="isLoading"-->
-<!--        :loader-color="loaderColor"-->
-<!--        :disabled="isLoading || !isAgree"-->
-<!--        :outlined="true"-->
-<!--      >-->
-<!--        {{ $tc('common.submit') }}-->
-<!--      </base-button>-->
-<!--    </form>-->
-<!--    <base-modal :options="modalContact">-->
-<!--      <template #header>-->
-<!--        <h3 class="contact-modal__title">-->
-<!--          {{ $t('modals.contact.title') }}-->
-<!--        </h3>-->
-<!--      </template>-->
-<!--      <template>-->
-<!--        <p class="contact-modal__text">-->
-<!--          {{ $t('modals.contact.desc') }}-->
-<!--          <span class="contact-modal__text_purple">{{ userEmail }}</span>.-->
-<!--        </p>-->
-<!--      </template>-->
-<!--      <template #footer>-->
-<!--        <base-button-->
-<!--          class="contact-modal__btn"-->
-<!--          :outlined="true"-->
-<!--          @click="hideModal"-->
-<!--        >-->
-<!--          {{ $t('common.close') }}-->
-<!--        </base-button>-->
-<!--      </template>-->
-<!--    </base-modal>-->
-<!--  </validation-observer>-->
-<!--</template>-->
 
 <script lang="ts">
 import MainVue from '~/mixins/MainVue';
 
 // @vue/component
 export default MainVue.extend({
-  name: "bridge-form"
+  name: "bridge-form",
+  data() {
+    return {
+      isLoading: false,
+      recipientAddress: '',
+      amount: null as null | string,
+      loaderColor: '#9D84FF',
+    };
+  },
+  methods:{
+    sendBridgeForm():void{
+      this.$store.dispatch('bridge/sendSwap')
+    }
+  }
 });
 </script>
 
 <style scoped lang="scss">
+.bridge-form {
+  width: 100%;
 
+  &__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    background: $gray;
+    border-radius: 14px;
+  }
+
+  &__title {
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+}
 </style>

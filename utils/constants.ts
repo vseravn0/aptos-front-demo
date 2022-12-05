@@ -5,10 +5,10 @@ export const NETWORKS_SHORT_NAMES = {
 };
 
 export const NETWORKS_TESTNET = {
-  [NETWORKS_SHORT_NAMES.ETH]: 4,
+  [NETWORKS_SHORT_NAMES.ETH]: 5,
   [NETWORKS_SHORT_NAMES.BSC]: 97,
   [NETWORKS_SHORT_NAMES.POLYGON]: 80001,
-  4: NETWORKS_SHORT_NAMES.ETH,
+  5: NETWORKS_SHORT_NAMES.ETH,
   97: NETWORKS_SHORT_NAMES.BSC,
   80001: NETWORKS_SHORT_NAMES.POLYGON,
 };
@@ -26,7 +26,7 @@ export type AnonProviders = {
   [key: number]: string
 }
 export const ANON_PROVIDERS_TESTNET: AnonProviders = {
-  [NETWORKS_TESTNET.ETH]: `https://rinkeby.infura.io/v3/${process.env.INFURA_KEY}`,
+  [NETWORKS_TESTNET.ETH]: `https://goerli.infura.io/v3/${process.env.INFURA_KEY}`,
   [NETWORKS_TESTNET.BSC]: 'https://data-seed-prebsc-1-s2.binance.org:8545',
   [NETWORKS_TESTNET.POLYGON]: 'https://matic-mumbai.chainstacklabs.com',
 };
@@ -36,3 +36,12 @@ export const ANON_PROVIDERS_MAINNET: AnonProviders = {
   [NETWORKS_MAINNET.BSC]: 'https://bsc-dataseed.binance.org',
   [NETWORKS_MAINNET.POLYGON]: 'https://polygon-rpc.com',
 };
+
+export const MESSAGE_FOR_SIGN = {
+  USER_DATA: 'Hi, this signature is required to receive and display data such as: payment sittings',
+};
+
+export enum BRIDGE_CONTRACT_METHODS {
+  SWAP = 'send',
+  CLAIM = 'claim'
+}

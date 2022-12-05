@@ -97,5 +97,7 @@ export default {
     INFURA_KEY: process.env.INFURA_KEY,
     IS_MAINNET: process.env.IS_MAINNET,
     API_URL: process.env.API_URL,
+    TOKEN: process.env.TOKEN,
+    BRIDGE: process.env.BRIDGE,
   },
 };

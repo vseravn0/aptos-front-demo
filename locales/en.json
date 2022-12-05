@@ -32,9 +32,27 @@
   "common": {
     "aptos": "Aptos",
     "eth": "Ethereum",
-    "airdrop": "Airdrop"
+    "airdrop": "Airdrop",
+    "swap": "Swap"
   },
   "header": {
     "connect-wallet": "Connect wallet"
+  },
+  "bridge-page": {
+    "bridge-form": {
+      "title": "Swap",
+      "inputs": {
+        "recipient": {
+          "name": "recipient",
+          "title": "Recipient *",
+          "placeholder": "Enter recipient's address"
+        },
+        "amount": {
+          "name": "amount",
+          "title": "Amount *",
+          "placeholder": "Enter your amount"
+        }
+      }
+    }
   }
 }
