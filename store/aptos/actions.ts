@@ -16,23 +16,20 @@ declare global {
   interface Window { aptos: any; }
 }
 
-// const IS_APTOS_MAINNET = process.env.IS_MAINNET
-//   ? APTOS_NETWORK_MAINNET.APT
-//   : APTOS_NETWORK_TESTNET.APT;
+const { aptos } = window;
 
 const actions: ActionTree<IAptosState, IRootState> = {
 
   async connectWallet({ commit }) {
-    const userData = await window.aptos.connect();
-    const isConnected = await window.aptos.isConnected();
-    const getChainId = await window.aptos.network();
-    commit('SET_CHAIN_ID', getChainId);
-    commit('SET_USER_DATA', userData);
-    commit('SET_IS_CONNECTED', isConnected);
+    const client = new AptosManager();
+    await client.connectWallet();
+    commit('SET_CHAIN_ID', client.getChainId);
+    commit('SET_USER_DATA', client.userData);
+    commit('SET_IS_CONNECTED', client.isConnected);
   },
 
   async disconnectWallet({ commit }) {
-    await window.aptos.disconnect();
+    await aptos.disconnect();
     commit('SET_USER_ADDRESS', initUserDataState);
     commit('SET_IS_CONNECTED', false);
   },
@@ -56,10 +53,10 @@ const actions: ActionTree<IAptosState, IRootState> = {
     commit('SET_TOKEN_DATA', res);
   },
   async sendTransaction(_, txn) {
-    await window.aptos.signAndSubmitTransaction(txn);
+    await aptos.signAndSubmitTransaction(txn);
   },
   async signTransaction(_, tnx) {
-    const signature = await window.aptos.signTransaction(tnx);
+    const signature = await aptos.signTransaction(tnx);
     console.log(signature);
   },
   async getGasPrice({ commit }) {
