@@ -6,7 +6,7 @@ export default class Bridge extends BasicContract {
   constructor({ address }:{address:string}) {
     super({
       address,
-      abi: bridge
+      abi: bridge,
     });
   }
 
@@ -14,13 +14,14 @@ export default class Bridge extends BasicContract {
     params: string[],
     userAddress: string,
   ): Promise<any> {
-    console.log(2)
+    console.log(params, userAddress);
     return await super.sendDataToContract(
       BRIDGE_CONTRACT_METHODS.SWAP,
       params,
       userAddress,
     );
   }
+
   async claim(
     params: string[],
     userAddress: string,
@@ -31,5 +32,4 @@ export default class Bridge extends BasicContract {
       userAddress,
     );
   }
-
 }

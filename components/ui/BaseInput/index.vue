@@ -139,7 +139,7 @@ export default MainVue.extend({
       default: '',
     },
     rounded: {
-      type: Boolean,
+      type: [Boolean, String],
       default: true,
     },
     disabled: {

@@ -1,40 +1,37 @@
 export const NETWORKS_SHORT_NAMES = {
   ETH: 'ETH',
-  BSC: 'BSC',
-  POLYGON: 'POLYGON',
+  APT: 'APT',
 };
 
 export const NETWORKS_TESTNET = {
-  [NETWORKS_SHORT_NAMES.ETH]: 5,
-  [NETWORKS_SHORT_NAMES.BSC]: 97,
-  [NETWORKS_SHORT_NAMES.POLYGON]: 80001,
-  5: NETWORKS_SHORT_NAMES.ETH,
-  97: NETWORKS_SHORT_NAMES.BSC,
-  80001: NETWORKS_SHORT_NAMES.POLYGON,
+  [NETWORKS_SHORT_NAMES.ETH]: 11155111,
+  11155111: NETWORKS_SHORT_NAMES.ETH,
 };
 
 export const NETWORKS_MAINNET = {
-  [NETWORKS_SHORT_NAMES.ETH]: 1,
-  [NETWORKS_SHORT_NAMES.BSC]: 56,
-  [NETWORKS_SHORT_NAMES.POLYGON]: 137,
-  1: NETWORKS_SHORT_NAMES.ETH,
-  56: NETWORKS_SHORT_NAMES.BSC,
-  137: NETWORKS_SHORT_NAMES.POLYGON,
+  [NETWORKS_SHORT_NAMES.ETH]: 11155111,
+  11155111: NETWORKS_SHORT_NAMES.ETH,
+};
+
+export const APTOS_NETWORK_TESTNET = {
+  [NETWORKS_SHORT_NAMES.APT]: 2,
+  2: [NETWORKS_SHORT_NAMES.APT],
+};
+
+export const APTOS_NETWORK_MAINNET = {
+  [NETWORKS_SHORT_NAMES.APT]: 1,
+  1: [NETWORKS_SHORT_NAMES.APT],
 };
 
 export type AnonProviders = {
   [key: number]: string
 }
 export const ANON_PROVIDERS_TESTNET: AnonProviders = {
-  [NETWORKS_TESTNET.ETH]: `https://goerli.infura.io/v3/${process.env.INFURA_KEY}`,
-  [NETWORKS_TESTNET.BSC]: 'https://data-seed-prebsc-1-s2.binance.org:8545',
-  [NETWORKS_TESTNET.POLYGON]: 'https://matic-mumbai.chainstacklabs.com',
+  [NETWORKS_TESTNET.ETH]: `https://sepolia.infura.io/v3/${process.env.INFURA_KEY}`,
 };
 
 export const ANON_PROVIDERS_MAINNET: AnonProviders = {
   [NETWORKS_MAINNET.ETH]: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
-  [NETWORKS_MAINNET.BSC]: 'https://bsc-dataseed.binance.org',
-  [NETWORKS_MAINNET.POLYGON]: 'https://polygon-rpc.com',
 };
 
 export const MESSAGE_FOR_SIGN = {
@@ -45,3 +42,23 @@ export enum BRIDGE_CONTRACT_METHODS {
   SWAP = 'send',
   CLAIM = 'claim'
 }
+
+export enum MODALS_KEY {
+  CONNECT_WALLET = 'connect_wallet'
+}
+
+export enum APTOS_COIN_HEADERS {
+  COIN_STORE = '0x1::coin::CoinStore',
+  COIN_INFO = '0x1::coin::CoinInfo',
+  COIN_SUPPORTED = '::SupportedTokens::USDT'
+}
+
+export const NODE_URL = process.env.APTOS_NODE_URL || 'https://fullnode.devnet.aptoslabs.com';
+export const FAUCET_URL = process.env.APTOS_FAUCET_URL || 'https://faucet.devnet.aptoslabs.com';
+export const APT_TOKEN = process.env.APTOS_TOKEN || '0x7612ebde3ecc5ef5ac9248011da4fd3bcbd695f645048e6f1fca8e1f91cade1a';
+// const { APT_TOKEN } = process.env;
+
+// export const APTOS_API_METHODS_PAYLOAD = {
+//   GET_USER_BALANCE: `<${APT_TOKEN}::SupportedTokens::USDT>`,
+//   GET_BALANCE: `<${APT_TOKEN}::CoinInfo::USDT>`,
+// };

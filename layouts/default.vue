@@ -1,7 +1,7 @@
 <template>
   <div class="primary">
     <div class="primary__template template">
-      <header-comp/>
+      <header-comp />
       <div class="template__content">
         <nuxt />
       </div>
@@ -9,17 +9,17 @@
         Footer
       </div>
     </div>
-    <base-modal-container />
-    <loader-screen />
+    <portal-target name="portal" />
+    <!--    <loader-screen />-->
   </div>
 </template>
 <script lang="ts">
 import MainVue from '~/mixins/MainVue';
-import Header from "~/components/Header/index.vue";
+import Header from '~/components/Header/index.vue';
 
 export default MainVue.extend({
-  components:{
-    "header-comp": Header
+  components: {
+    'header-comp': Header,
   },
   mounted() {
     this.SetLoader(true);

@@ -1,5 +1,5 @@
 import { NETWORKS_MAINNET, NETWORKS_TESTNET } from '~/utils/constants';
-import {IWeb3V2State} from "~/types/store/web3";
+import { IWeb3V2State } from '~/types/store/web3';
 
 export const initState = (): IWeb3V2State => ({
   isConnected: false,

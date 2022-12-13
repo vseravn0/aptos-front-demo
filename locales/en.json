@@ -36,7 +36,11 @@
     "swap": "Swap"
   },
   "header": {
-    "connect-wallet": "Connect wallet"
+    "connect-wallet": "Connect wallet",
+    "connect-wallets": "Connect wallets",
+    "metamask": "Connect Metamask",
+    "petra": "Connect Petra",
+    "wallets": "Wallets"
   },
   "bridge-page": {
     "bridge-form": {

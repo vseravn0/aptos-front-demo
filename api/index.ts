@@ -1,12 +1,12 @@
 import { setHTTPClientInstance } from './httpClient';
-import tokenService, { ITokenSevice } from './restServices/token';
+import aptosService, { IAptosService } from './restServices/aptos';
 
 export interface IApiService {
-  tokenService: ITokenSevice
+  aptosService: IAptosService
 }
 
 export default {
-  tokenService,
+  aptosService,
 } as IApiService;
 
 export {

@@ -1,4 +1,4 @@
-import Token, {ITransaction} from "~/core/contracts/Token";
+import Token, { ITransaction } from '~/core/contracts/Token';
 
 export interface ITokensMap {
   [key: string]: Token;

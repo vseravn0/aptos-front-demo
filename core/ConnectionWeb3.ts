@@ -138,28 +138,31 @@ export default class ConnectionWeb3 {
       ? networksChainsConfig[blockchainName].mainnet.switchChain
       : networksChainsConfig[blockchainName].testnet.switchChain;
     // сигнатура для метода добавления сети в метамаск
-    const addRpcMethod = isMainnet
-      ? networksChainsConfig[blockchainName].mainnet.addChain
-      : networksChainsConfig[blockchainName].testnet.addChain;
+    // const addRpcMethod = isMainnet
+    //   ? networksChainsConfig[blockchainName].mainnet.addChain
+    //   : networksChainsConfig[blockchainName].testnet.addChain;
     if (this.chainId !== tragetChainID) {
       try {
         await currentProvider.request(switchRpcMethod);
-      } catch (switchError) {
-        if ((switchError as ProviderRpcError).code === CHAINS_ERROR.CHAIN_NOT_EXIST) {
-          try {
-            await currentProvider.request(addRpcMethod);
-          } catch (addError) {
-            throw error(CHAINS_ERROR.ADD_CHAIN_DENIED, 'chain connection error', addError);
-          }
-        }
-
-        if ((switchError as ProviderRpcError).code === CHAINS_ERROR.SWITCH_DENIED) {
-          throw error(CHAINS_ERROR.SWITCH_DENIED, 'user denied transaction', switchError);
-        }
-
-        if (!addRpcMethod) {
-          throw error(CHAINS_ERROR.CANT_ADD_CHAIN, 'chain connection error');
-        }
+      // } catch (switchError) {
+      //   if ((switchError as ProviderRpcError).code === CHAINS_ERROR.CHAIN_NOT_EXIST) {
+      //     try {
+      //       await currentProvider.request(addRpcMethod);
+      //     } catch (addError) {
+      //       throw error(CHAINS_ERROR.ADD_CHAIN_DENIED, 'chain connection error', addError);
+      //     }
+      //   }
+      //
+      //   if ((switchError as ProviderRpcError).code === CHAINS_ERROR.SWITCH_DENIED) {
+      //     throw error(CHAINS_ERROR.SWITCH_DENIED, 'user denied transaction', switchError);
+      //   }
+      //
+      //   if (!addRpcMethod) {
+      //     throw error(CHAINS_ERROR.CANT_ADD_CHAIN, 'chain connection error');
+      //   }
+      // }
+      } catch (e) {
+        console.log(e);
       }
     }
 

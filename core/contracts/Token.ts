@@ -16,6 +16,7 @@ export interface ITransaction {
 export default class Token extends BasicContract {
   decimals = '0'
   symbol = ''
+  name = ''
   balance = '0'
 
   constructor({ address }:{ address: string}) {
@@ -26,10 +27,11 @@ export default class Token extends BasicContract {
   }
 
   async initAnonData(): Promise<void> {
-    const [decimals, symbol] = await Promise.all([super.fetchContractData('decimals'), super.fetchContractData('symbol')]);
+    const [decimals, symbol, name] = await Promise.all([super.fetchContractData('decimals'), super.fetchContractData('symbol'), super.fetchContractData('name')]);
 
     this.symbol = symbol;
     this.decimals = decimals;
+    this.name = name;
   }
 
   async getBalance(userAddress: string): Promise<string> {

@@ -1,7 +1,8 @@
 import type { GetterTree } from 'vuex/types/index';
-import {IWeb3V2State, ITokensMap, ITransactionsMap} from "~/types/store/web3";
+import { IWeb3V2State, ITokensMap, ITransactionsMap } from '~/types/store/web3';
+import { IRootState } from '~/types/store';
 
-const getters: GetterTree<IWeb3V2State, IWeb3V2State> = {
+const getters: GetterTree<IWeb3V2State, IRootState> = {
   getIsConnected: (state): boolean => state.isConnected,
   getChainId: (state): number | string | null => state.chainId,
   getUserAddress: (state): string => state.userAddress,

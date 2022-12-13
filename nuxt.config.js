@@ -1,7 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from 'dotenv';
-import localeEn from './locales/en.json';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import StyleLintPlugin from 'stylelint-webpack-plugin';
+import localeEn from './locales/en.json';
 
 dotenv.config();
 
@@ -39,6 +39,7 @@ export default {
     'nuxt-i18n',
     'nuxt-clipboard',
     '@nuxtjs/axios',
+    'portal-vue/nuxt',
   ],
   plugins: [
     { src: '@plugins/injectComponents.js' },
@@ -72,6 +73,11 @@ export default {
             failOnError: false,
           }),
         );
+        config.module.rules.push({
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto',
+        });
       }
     },
   },
@@ -91,13 +97,14 @@ export default {
     },
   },
   axios: {
-    baseURL: process.env.API_URL,
+    baseURL: process.env.APTOS_NODE_URL,
   },
   env: {
     INFURA_KEY: process.env.INFURA_KEY,
     IS_MAINNET: process.env.IS_MAINNET,
-    API_URL: process.env.API_URL,
-    TOKEN: process.env.TOKEN,
+    ETH_TOKEN: process.env.ETH_TOKEN,
+    APT_TOKEN: process.env.APT_TOKEN,
+    APTOS_NODE_URL: process.env.APTOS_NODE_URL,
     BRIDGE: process.env.BRIDGE,
   },
 };
