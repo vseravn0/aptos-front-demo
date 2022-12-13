@@ -1,7 +1,7 @@
-import {IBridgeState} from "~/types/store/bridge";
+import { IBridgeState } from '~/types/store/bridge';
 
 export const initState = (): IBridgeState => ({
-  t:'',
+  t: '',
 });
 
 export default initState;

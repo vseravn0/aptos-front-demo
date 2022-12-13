@@ -16,6 +16,11 @@ const actions: ActionTree<IBridgeState, IRootState> = {
       rootGetters['web3/getUserAddress'],
     );
   },
+  async claim({ rootGetters }, payload) {
+    console.log(payload);
+    const contract = new Bridge({ address: process.env.BRIDGE as string });
+    await contract.claim(payload, rootGetters['web3/getUserAddress']);
+  },
 };
 
 export default actions;
