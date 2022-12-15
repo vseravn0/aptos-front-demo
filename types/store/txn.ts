@@ -1,3 +1,3 @@
 export interface ITxnState {
-  txn: any[],
+  txn: Record<string, string>[] | null,
 }

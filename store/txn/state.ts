@@ -1,7 +1,7 @@
 import { ITxnState } from '~/types/store/txn';
 
 export const initState = (): ITxnState => ({
-  txn: [],
+  txn: null,
 });
 
 export default initState();

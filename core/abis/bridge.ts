@@ -65,9 +65,9 @@ export default [
       {
         components: [
           {
-            internalType: 'address',
+            internalType: 'bytes',
             name: 'from',
-            type: 'address',
+            type: 'bytes',
           },
           {
             internalType: 'bytes',
@@ -115,9 +115,9 @@ export default [
       {
         components: [
           {
-            internalType: 'address',
+            internalType: 'bytes',
             name: 'from',
-            type: 'address',
+            type: 'bytes',
           },
           {
             internalType: 'bytes',
@@ -164,9 +164,9 @@ export default [
       {
         components: [
           {
-            internalType: 'address',
+            internalType: 'bytes',
             name: 'from',
-            type: 'address',
+            type: 'bytes',
           },
           {
             internalType: 'bytes',

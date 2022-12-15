@@ -5,12 +5,11 @@ import { IBridgeState } from '~/types/store/bridge';
 
 const actions: ActionTree<IBridgeState, IRootState> = {
   async sendSwap({ rootGetters }, { recipient, amount }) {
-    console.log(amount);
     const contract = new Bridge({ address: process.env.BRIDGE as string });
     await contract.swapToken(
       [
         rootGetters['web3/getTokensMap'][process.env.ETH_TOKEN as string].symbol,
-        rootGetters['web3/getChainId'],
+        '2',
         recipient,
         amount],
       rootGetters['web3/getUserAddress'],
