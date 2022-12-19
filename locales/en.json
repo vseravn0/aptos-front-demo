@@ -34,7 +34,8 @@
     "eth": "Ethereum",
     "airdrop": "Airdrop",
     "swap": "Swap",
-    "claim": "Claim"
+    "claim": "Claim",
+    "refresh": "Refresh"
   },
   "header": {
     "connect-wallet": "Connect wallet",

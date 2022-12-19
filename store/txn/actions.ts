@@ -11,6 +11,9 @@ const actions: ActionTree<ITxnState, IRootState> = {
     const signature = await this.$api.txnService.getSignature(payload);
     return signature;
   },
+  refreshTxn({ commit }) {
+    commit('SET_EMPTY_TXN');
+  },
 };
 
 export default actions;

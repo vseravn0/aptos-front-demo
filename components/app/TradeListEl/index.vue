@@ -83,8 +83,8 @@ export default MainVue.extend({
     },
     async aptClaim():Promise<void> {
       const payload = {
-        function: `${process.env.APT_COIN}::${APTOS_COIN_MODULES.BRIDGE}::${APTOS_COIN_STRUCTURE.CLAIM}`,
-        type_arguments: [`${process.env.APT_COIN}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}`],
+        function: `${process.env.APT_TOKEN}::${APTOS_COIN_MODULES.BRIDGE}::${APTOS_COIN_STRUCTURE.CLAIM}`,
+        type_arguments: [`${process.env.APT_TOKEN}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}`],
         arguments: [],
       };
       await this.$store.dispatch('aptos/sendTransaction', payload);
@@ -98,9 +98,11 @@ export default MainVue.extend({
             await this.ethClaim({
               amount, chainFrom, chainTo, from, id, nonce, to, tokenSymbol,
             });
+            await this.$store.dispatch('web3/updateTokenBalance', process.env.ETH_TOKEN);
             break;
           case '2':
             await this.aptClaim();
+            await this.$store.dispatch('aptos/updateTokenBalance');
             break;
           default: break;
         }

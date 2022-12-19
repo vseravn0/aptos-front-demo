@@ -29,16 +29,24 @@
           rounded="true"
         />
       </div>
-      <base-button
-        form="bridge-form"
-        type="submit"
-        :loading="isLoading"
-        :loader-color="loaderColor"
-        :disabled="isLoading"
-        :outlined="true"
-      >
-        {{ $t('common.swap') }}
-      </base-button>
+      <div class="bridge-form__btns">
+        <base-button
+          form="bridge-form"
+          type="submit"
+          :loading="isLoading"
+          :loader-color="loaderColor"
+          :disabled="isLoading"
+          :outlined="true"
+        >
+          {{ $t('common.swap') }}
+        </base-button>
+        <base-button
+          :outlined="true"
+          @click="refreshTxn"
+        >
+          {{ $t('common.refresh') }}
+        </base-button>
+      </div>
     </form>
   </validation-observer>
 </template>
@@ -64,6 +72,8 @@ export default MainVue.extend({
     ...mapGetters({
       ethTokenData: 'web3/getTokensMap',
       aptTokenData: 'aptos/getTokenData',
+      aptUserAddress: 'aptos/getUserAddress',
+      ethUserAddress: 'web3/getUserAddress',
       chainId: 'web3/getChainId',
     }),
   },
@@ -74,34 +84,53 @@ export default MainVue.extend({
       }
       return undefined;
     },
-    sendBridgeForm():void {
-      if (this.isAptosAddress(this.recipientAddress)) {
-        this.sendEthTxn(this.recipientAddress, this.amount);
+    async sendBridgeForm():Promise<void> {
+      try {
+        if (this.isAptosAddress(this.recipientAddress)) {
+          await this.sendEthTxn(this.recipientAddress, this.amount);
+          this.reset();
+          return;
+        }
+        await this.sendAptTxn(this.recipientAddress, this.amount);
         this.reset();
-        return;
+      } catch (e) {
+        console.log(`send err ${e}`);
       }
-      this.sendAptTxn(this.recipientAddress, this.amount);
-      this.reset();
     },
     isAptosAddress(address:string):boolean {
       return address.length === 66;
     },
-    sendEthTxn(recipient:string, amount:string):void {
-      this.$store.dispatch('bridge/sendSwap', {
+    async sendEthTxn(recipient:string, amount:string):Promise<void> {
+      await this.$store.dispatch('bridge/sendSwap', {
         recipient,
         amount: this.convertAmount(
           amount,
           +this.ethTokenData[process.env.ETH_TOKEN as string].decimals,
         ),
       });
+      await this.$store.dispatch('web3/updateTokenBalance', process.env.ETH_TOKEN);
     },
-    sendAptTxn(recipient:string, amount:string):void {
+    async sendAptTxn(recipient:string, amount:string):Promise<void> {
       const txn = {
         function: `${process.env.APT_TOKEN}::${APTOS_COIN_MODULES.BRIDGE}::${APTOS_COIN_STRUCTURE.SEND}`,
         type_arguments: [`${process.env.APT_TOKEN}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}`],
         arguments: [`${recipient}`, `${this.chainId}`, `${new BigNumber(amount).shiftedBy(this.aptTokenData.decimals).toFixed()}`],
       };
-      this.$store.dispatch('aptos/sendTransaction', txn);
+      await this.$store.dispatch('aptos/sendTransaction', txn);
+      await this.$store.dispatch('aptos/updateTokenBalance');
+    },
+    async refreshTxn():Promise<void> {
+      try {
+        await this.$store.dispatch('txn/refreshTxn');
+        if (this.aptUserAddress) {
+          await this.$store.dispatch('txn/txnRequest', this.aptUserAddress);
+        }
+        if (this.ethUserAddress) {
+          await this.$store.dispatch('txn/txnRequest', this.ethUserAddress);
+        }
+      } catch (e) {
+        console.log(`refresh ${e}`);
+      }
     },
     reset():void {
       this.recipientAddress = '';
@@ -125,6 +154,12 @@ export default MainVue.extend({
     padding: 30px;
     background: $gray;
     border-radius: 14px;
+  }
+
+  &__btns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
   &__title {
