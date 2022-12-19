@@ -4,7 +4,7 @@
       <bridge-form />
     </div>
     <div class="main-page__trades">
-      <TradeList />
+      <trade-list />
     </div>
   </div>
 </template>
@@ -44,9 +44,13 @@ export default MainVue.extend({
     },
   },
   async mounted() {
-    await this.$store.dispatch('web3/connectNode');
-    await this.$store.dispatch('web3/setTokens', [process.env.ETH_TOKEN]);
-    await this.$store.dispatch('aptos/getTokenData');
+    try {
+      await this.$store.dispatch('web3/connectNode');
+      await this.$store.dispatch('web3/setTokens', [process.env.ETH_TOKEN]);
+      await this.$store.dispatch('aptos/getTokenData');
+    } catch (e) {
+      console.log(`get tokens data error ${e}`);
+    }
   },
 
 });

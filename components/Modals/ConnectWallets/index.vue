@@ -114,7 +114,6 @@ export default MainVue.extend({
   methods: {
     async copyAddress(address:string) {
       this.$copyText(address);
-      await this.$store.dispatch('txn/txnRequest', address);
     },
     async connectMetamask() {
       this.isMetamaskLoading = true;

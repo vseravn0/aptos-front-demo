@@ -101,7 +101,6 @@ export default MainVue.extend({
         type_arguments: [`${process.env.APT_TOKEN}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}`],
         arguments: [`${recipient}`, `${this.chainId}`, `${new BigNumber(amount).shiftedBy(this.aptTokenData.decimals).toFixed()}`],
       };
-      console.log(txn);
       this.$store.dispatch('aptos/sendTransaction', txn);
     },
     reset():void {

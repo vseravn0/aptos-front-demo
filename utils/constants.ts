@@ -71,4 +71,10 @@ export enum APTOS_NETWORK {
   DEVNET = 'Devnet',
 }
 
+export enum APTOS_NETWORK_ID {
+  MAINNET = '1',
+  TESTNET = '2',
+  DEVNET = '37'
+}
+
 export const APTOS_NODE_URL = process.env.IS_MAINNET === 'true' ? 'https://fullnode.mainnet.aptoslabs.com/v1/' : 'https://fullnode.testnet.aptoslabs.com/v1/';
