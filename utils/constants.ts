@@ -48,17 +48,27 @@ export enum MODALS_KEY {
 }
 
 export enum APTOS_COIN_HEADERS {
+  // CoinStore gives user balance
   COIN_STORE = '0x1::coin::CoinStore',
+  // CoinStore gives token decimal,symbol and etc
   COIN_INFO = '0x1::coin::CoinInfo',
-  COIN_SUPPORTED = '::SupportedTokens::USDT'
 }
 
-export const NODE_URL = process.env.APTOS_NODE_URL || 'https://fullnode.devnet.aptoslabs.com';
-export const FAUCET_URL = process.env.APTOS_FAUCET_URL || 'https://faucet.devnet.aptoslabs.com';
-export const APT_TOKEN = process.env.APTOS_TOKEN || '0x06d6080cb1ecadb865b6cc88c040d27373637119e1f1697ffe99375e9de12513';
-// const { APT_TOKEN } = process.env;
+export enum APTOS_COIN_MODULES {
+  SUPPORTED_TOKENS = 'SupportedTokens',
+  BRIDGE = 'Bridge'
+}
 
-// export const APTOS_API_METHODS_PAYLOAD = {
-//   GET_USER_BALANCE: `<${APT_TOKEN}::SupportedTokens::USDT>`,
-//   GET_BALANCE: `<${APT_TOKEN}::CoinInfo::USDT>`,
-// };
+export enum APTOS_COIN_STRUCTURE {
+  USDT = 'USDT',
+  CLAIM = 'claim',
+  SEND = 'send'
+}
+
+export enum APTOS_NETWORK {
+  TESTNET = 'Testnet',
+  MAINNET = 'Mainnet',
+  DEVNET = 'Devnet',
+}
+
+export const APTOS_NODE_URL = process.env.IS_MAINNET === 'true' ? 'https://fullnode.mainnet.aptoslabs.com/v1/' : 'https://fullnode.testnet.aptoslabs.com/v1/';

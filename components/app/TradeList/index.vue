@@ -26,5 +26,8 @@ export default MainVue.extend({
 </script>
 
 <style scoped lang="scss">
-
+.trade-list {
+  display: grid;
+  gap: 20px;
+}
 </style>

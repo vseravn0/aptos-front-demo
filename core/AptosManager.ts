@@ -1,9 +1,14 @@
 import { AptosClient, MaybeHexString } from 'aptos';
-import { APTOS_COIN_HEADERS } from '~/utils/constants';
+import {
+  APTOS_COIN_HEADERS, APTOS_COIN_MODULES, APTOS_COIN_STRUCTURE, APTOS_NETWORK,
+  APTOS_NODE_URL,
+} from '~/utils/constants';
 
 declare global {
   interface Window { aptos: any; }
 }
+
+const { aptos } = window;
 let store: any;
 
 if (process.browser) {
@@ -12,21 +17,24 @@ if (process.browser) {
   });
 }
 
+const currentNetwork = process.env.IS_MAINNET === 'true' ? APTOS_NETWORK.MAINNET : APTOS_NETWORK.TESTNET;
+
+// example how to use aptos sdk
+
 export default class AptosManager extends AptosClient {
   userData: any = null
   isConnected = false
   getChainId: any
   constructor() {
-    super(process.env.APTOS_NODE_URL as string);
+    super(APTOS_NODE_URL);
   }
 
   async connectWallet():Promise<void> {
     try {
-      const { aptos } = window;
       this.userData = await aptos.connect();
       this.isConnected = await aptos.isConnected();
       this.getChainId = await aptos.network();
-      if (this.getChainId !== 'Testnet') {
+      if (this.getChainId !== currentNetwork) {
         aptos.disconnect();
       }
       this.setEventListener();
@@ -35,10 +43,6 @@ export default class AptosManager extends AptosClient {
       console.log(errMsg);
     }
   }
-
-  // commit('SET_CHAIN_ID', client.getChainId);
-  // commit('SET_USER_DATA', client.userData);
-  // commit('SET_IS_CONNECTED', client.isConnected);
 
   private onNetworkChange():void {
     window.aptos.onNetworkChange((newNetwork) => {
@@ -58,7 +62,24 @@ export default class AptosManager extends AptosClient {
     });
   }
 
-  private disconnect():void {
+  public async sendAndSubmitTnx(tnxPayload:Record<string, string>):Promise<void> {
+    try {
+      await aptos.signAndSubmitTransaction(tnxPayload);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async signTnx(tnxPayload:Record<string, string>):Promise<void> {
+    try {
+      await aptos.signTransaction(tnxPayload);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public disconnect():void {
+    aptos.disconnect();
     this.userData = '';
     this.isConnected = false;
     this.getChainId = '';
@@ -84,7 +105,7 @@ export default class AptosManager extends AptosClient {
       // @ts-ignore
       const { data: { decimals, name, symbol } } = await this.getAccountResource(
         coinTypeAddress,
-        `${APTOS_COIN_HEADERS.COIN_INFO}<${coinTypeAddress + APTOS_COIN_HEADERS.COIN_SUPPORTED}>`,
+        `${APTOS_COIN_HEADERS.COIN_INFO}<${`${coinTypeAddress}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}`}>`,
       );
       return { decimals, name, symbol };
     } catch (e) {
@@ -99,7 +120,7 @@ export default class AptosManager extends AptosClient {
     try {
       const resource = await this.getAccountResource(
         accountAddress,
-        `${APTOS_COIN_HEADERS.COIN_STORE}<${coinTypeAddress + APTOS_COIN_HEADERS.COIN_SUPPORTED}>`,
+        `${APTOS_COIN_HEADERS.COIN_STORE}<${`${coinTypeAddress}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}`}>`,
       );
       return parseInt((resource.data as any).coin.value, 10);
     } catch (e) {

@@ -97,14 +97,13 @@ export default {
     },
   },
   axios: {
-    baseURL: process.env.APTOS_NODE_URL,
+    baseURL: 'https://fullnode.testnet.aptoslabs.com/v1/',
   },
   env: {
     INFURA_KEY: process.env.INFURA_KEY,
     IS_MAINNET: process.env.IS_MAINNET,
     ETH_TOKEN: process.env.ETH_TOKEN,
     APT_TOKEN: process.env.APT_TOKEN,
-    APTOS_NODE_URL: process.env.APTOS_NODE_URL,
     BRIDGE: process.env.BRIDGE,
   },
 };

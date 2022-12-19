@@ -47,6 +47,7 @@
 import MainVue from '~/mixins/MainVue';
 import BigNumber from 'bignumber.js';
 import { mapGetters } from 'vuex';
+import { APTOS_COIN_MODULES, APTOS_COIN_STRUCTURE } from '~/utils/constants';
 
 // @vue/component
 export default MainVue.extend({
@@ -96,8 +97,8 @@ export default MainVue.extend({
     },
     sendAptTxn(recipient:string, amount:string):void {
       const txn = {
-        function: `${process.env.APT_TOKEN}::Bridge::send`,
-        type_arguments: [`${process.env.APT_TOKEN}::SupportedTokens::USDT`],
+        function: `${process.env.APT_TOKEN}::${APTOS_COIN_MODULES.BRIDGE}::${APTOS_COIN_STRUCTURE.SEND}`,
+        type_arguments: [`${process.env.APT_TOKEN}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}`],
         arguments: [`${recipient}`, `${this.chainId}`, `${new BigNumber(amount).shiftedBy(this.aptTokenData.decimals).toFixed()}`],
       };
       console.log(txn);

@@ -1,22 +1,24 @@
 import httpClient from '~/api/httpClient';
+import { APTOS_COIN_HEADERS, APTOS_COIN_MODULES, APTOS_COIN_STRUCTURE } from '~/utils/constants';
 
 const { APT_TOKEN } = process.env;
 
+// example how to use node api request for get data
+
 export interface IAptosService {
-  getUserBalance: (userAddress:string) => Promise<any>
+  getUserBalance: (userAddress:string) => Promise<Record<string, string>>
   getTokenData: () => Promise<void>
   getNonce: (userAddress:string) => Promise<string>
   getGasPrice: () => Promise<string>
-  sendTokenBridge: ({ payload, signature }:any) => Promise<any>
 }
 
 const getUserBalance = async (userAddress:string): Promise<any> => {
-  const { data: { coin: { value } } } = await httpClient.$get(`accounts/${userAddress}/resource/0x1::coin::CoinStore<${APT_TOKEN}::SupportedTokens::USDT>`);
+  const { data: { coin: { value } } } = await httpClient.$get(`accounts/${userAddress}/resource/${APTOS_COIN_HEADERS.COIN_STORE}<${APT_TOKEN}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}>`);
   return value;
 };
 
 const getTokenData = async (): Promise<void> => {
-  const { data } = await httpClient.$get(`accounts/${APT_TOKEN}/resource/0x1::coin::CoinInfo<${APT_TOKEN}::SupportedTokens::USDT>`);
+  const { data } = await httpClient.$get(`accounts/${APT_TOKEN}/resource/${APTOS_COIN_HEADERS.COIN_STORE}<${APT_TOKEN}::${APTOS_COIN_MODULES.SUPPORTED_TOKENS}::${APTOS_COIN_STRUCTURE.USDT}>`);
   return data;
 };
 
@@ -34,15 +36,9 @@ const getGasPrice = async (): Promise<string> => {
   return gas_estimate;
 };
 
-const sendTokenBridge = async (payload:any): Promise<void> => {
-  const res = await httpClient.$post('/transactions', { ...payload });
-  console.log(res);
-};
-
 export default {
   getUserBalance,
   getTokenData,
   getNonce,
   getGasPrice,
-  sendTokenBridge,
 } as IAptosService;

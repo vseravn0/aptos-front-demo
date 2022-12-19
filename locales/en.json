@@ -61,8 +61,8 @@
     },
     "trade-list-el": {
       "recipient": "Recipient",
-      "txn": "Transaction",
-      "amount": "Amount"
+      "amount": "Amount",
+      "sender": "Sender"
     }
   }
 }
