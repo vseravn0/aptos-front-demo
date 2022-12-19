@@ -4,7 +4,7 @@
       <bridge-form />
     </div>
     <div class="main-page__trades">
-      <trade-list-el :txn="testTxn" />
+      <TradeList />
     </div>
   </div>
 </template>
@@ -12,32 +12,33 @@
 <script lang="ts">
 import MainVue from '~/mixins/MainVue';
 import bridgeForm from '~/components/app/BridgeForm/index.vue';
-import TradeListEl from '~/components/app/TradeListEl/index.vue';
+import TradeList from '~/components/app/TradeList/index.vue';
 import { mapGetters } from 'vuex';
 
 // @vue/component
 export default MainVue.extend({
   name: 'main-page',
-  components: { TradeListEl, bridgeForm },
+  components: { TradeList, bridgeForm },
   computed: {
     ...mapGetters({
       isMetamaskConnected: 'aptos/getIsConnected',
-      isPetraAddress: 'aptos/getUserAddress',
+      metamaskAddress: 'web3/getUserAddress',
+      petraAddress: 'aptos/getUserAddress',
       isPetraConnected: 'web3/getIsConnected',
     }),
-    testTxn():Record<string, string> {
-      return {
-        recipient: '0x06557D3c75fB0142d92656A5636363c84b63d2d0',
-        txn: '0x06557D3c75fB0142d92656A5636363c84b63d2d0',
-        amount: '100',
-      };
-    },
   },
   watch: {
-    isMetamaskConnected: {
-      handler(bool:boolean) {
-        if (bool) {
-          this.$store.dispatch('txn/txnRequest', this.isPetraConnected);
+    petraAddress: {
+      handler(address:string) {
+        if (address) {
+          this.$store.dispatch('txn/txnRequest', address);
+        }
+      },
+    },
+    metamaskAddress: {
+      handler(address:string) {
+        if (address) {
+          this.$store.dispatch('txn/txnRequest', address);
         }
       },
     },

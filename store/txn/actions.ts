@@ -7,6 +7,10 @@ const actions: ActionTree<ITxnState, IRootState> = {
     const txn = await this.$api.txnService.getUserTxns(payload);
     commit('SET_TXN', txn);
   },
+  async signatureRequest(_, payload) {
+    const signature = await this.$api.txnService.getSignature(payload);
+    return signature;
+  },
 };
 
 export default actions;

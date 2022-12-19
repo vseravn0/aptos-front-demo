@@ -55,7 +55,7 @@ export enum APTOS_COIN_HEADERS {
 
 export const NODE_URL = process.env.APTOS_NODE_URL || 'https://fullnode.devnet.aptoslabs.com';
 export const FAUCET_URL = process.env.APTOS_FAUCET_URL || 'https://faucet.devnet.aptoslabs.com';
-export const APT_TOKEN = process.env.APTOS_TOKEN || '0x7612ebde3ecc5ef5ac9248011da4fd3bcbd695f645048e6f1fca8e1f91cade1a';
+export const APT_TOKEN = process.env.APTOS_TOKEN || '0x06d6080cb1ecadb865b6cc88c040d27373637119e1f1697ffe99375e9de12513';
 // const { APT_TOKEN } = process.env;
 
 // export const APTOS_API_METHODS_PAYLOAD = {

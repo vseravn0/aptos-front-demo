@@ -2,17 +2,20 @@
   <div class="trade-list-el">
     <div class="trade-list-el__recipient el-column">
       <span class="el-column__header">{{ $t('bridge-page.trade-list-el.recipient') }}</span>
-      <span class="el-column__content">{{ txn.recipient }}</span>
+      <span class="el-column__content">{{ txn.from }}</span>
     </div>
     <div class="trade-list-el__txn el-column">
       <span class="el-column__header">{{ $t('bridge-page.trade-list-el.txn') }}</span>
-      <span class="el-column__content">{{ txn.txn }}</span>
+      <span class="el-column__content">{{ txn.to }}</span>
     </div>
     <div class="trade-list-el__amount el-column">
       <span class="el-column__header">{{ $t('bridge-page.trade-list-el.amount') }}</span>
       <span class="el-column__content">{{ txn.amount }}</span>
     </div>
-    <base-button :outlined="true">
+    <base-button
+      :outlined="true"
+      @click="claim(txn)"
+    >
       {{ $t('common.claim') }}
     </base-button>
   </div>
@@ -29,6 +32,22 @@ export default MainVue.extend({
     txn: {
       type: Object as PropType<Record<string, string>>,
       required: true,
+    },
+  },
+  methods: {
+    async claim({
+      amount, chainFrom, chainTo, from, id, nonce, to, tokenSymbol,
+    }:any) {
+      const signature = await this.$store.dispatch('txn/signatureRequest', id);
+      // const payload = {
+      //   function: '0x06d6080cb1ecadb865b6cc88c040d27373637119e1f1697ffe99375e9de12513::Bridge::claim',
+      //   type_arguments: ['0x06d6080cb1ecadb865b6cc88c040d27373637119e1f1697ffe99375e9de12513::SupportedTokens::USDT'],
+      //   arguments: [],
+      // };
+      // await this.$store.dispatch('aptos/sendTransaction', payload);
+      await this.$store.dispatch('bridge/claim', [{
+        amount, chainFrom, chainTo, from, nonce, to, tokenSymbol,
+      }, signature]);
     },
   },
 });
