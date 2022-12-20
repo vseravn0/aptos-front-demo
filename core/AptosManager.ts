@@ -45,15 +45,18 @@ export default class AptosManager extends AptosClient {
   }
 
   private onNetworkChange():void {
-    window.aptos.onNetworkChange((newNetwork) => {
-      this.chainId = newNetwork;
+    window.aptos.onNetworkChange((newNetwork:string) => {
+      if (newNetwork !== currentNetwork) {
+        this.disconnect();
+        return;
+      }
       store.commit('aptos/SET_CHAIN_ID', newNetwork);
     });
   }
 
   private accountChanged():void {
-    window.aptos.onAccountChange((newAccount) => {
-      if (newAccount) {
+    window.aptos.onAccountChange((newAccount:Record<string, string>) => {
+      if (JSON.parse(JSON.stringify(newAccount))) {
         this.userData = newAccount;
         store.commit('aptos/SET_USER_DATA', newAccount);
       } else {

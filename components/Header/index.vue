@@ -9,11 +9,11 @@
       <div class="app-header__blockchain-block blockchain-block">
         <div class="blockchain-block__network network">
           <token-block
-            v-if="aptToken.balance"
+            v-if="aptToken.balance && isPetraConnected"
             :token="aptToken"
           />
           <token-block
-            v-if="ethToken.balance"
+            v-if="ethToken.balance && isMetamaskConnected"
             :token="ethToken"
           />
           <base-button
@@ -121,7 +121,7 @@ export default MainVue.extend({
 
 .network {
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(3, auto);
   gap: 13px;
   align-items: center;
 }

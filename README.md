@@ -108,3 +108,47 @@ This folder is intended for small utility functions that are often used on the p
 
 ## locales
 This folder stores localization json files  and configs associated with localizations (for example, config with date format in different locales)
+
+# APTOS INTEGRATION
+
+## You need to install: 
+`https://github.com/golden-expiriensu/eth-aptos-bridge`
+
+`https://www.docker.com/`
+
+In back rep you should to type your path for keys in env file: `CERTS_PATH=/Users/Frontend/Documents/projects/eth-aptos-bridge/backend/certs`
+
+```bash 
+#in solidity rep you need to use this command
+$ pnpm hardhat compile
+
+#in back rep you need to use this
+$ docker-compose rm -fsv dev-db && docker-compose up -d dev-db
+$ nest start --watch
+```
+
+### wallets 
+
+https://petra.app/docs/petra-intro
+
+### dapp example 
+
+https://aptos.dev/tutorials/your-first-dapp
+
+### nodeAPI
+
+https://fullnode.devnet.aptoslabs.com/v1/spec#/
+
+
+### sdk examples
+
+https://github.com/aptos-labs/aptos-core/tree/main/ecosystem/typescript/sdk/examples/typescript
+
+# File structure
+
+## restServices/aptos
+`aptos.ts` - example how to use node api
+`txn.ts` - back intgeration example 
+
+## core/AptosManager
+`AptosManager` - this is wrapper for sdk
