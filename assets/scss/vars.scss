@@ -1,0 +1,36 @@
+$main-text-color:                                 var(--main-text-color);
+
+// buttons
+$default-btn-bg:                                  var(--default-btn-bg);
+$default-btn-border:                              var(--default-btn-border);
+
+$danger-btn-bg:                                   var(--danger-btn-bg);
+$danger-btn-border:                               var(--danger-btn-border);
+
+$success-btn-bg:                                  var(--success-btn-bg);
+$success-btn-border:                              var(--success-btn-border);
+
+$disabled-btn-bg:                                 var(--disabled-btn-bg);
+$disabled-btn-border:                             var(--disabled-btn-border);
+$disabled-btn-text:                               var(--disabled-btn-text);
+
+// input
+$fields:                                          var(--fields);
+$fields-focused:                                  var(--fields-focused);
+$fields-text:                                     var(--fields-text);
+$fields-placeholeder-text:                        var(--fields-placeholeder-text);
+$fields-border:                                   var(--fields-border);
+$fields-border-danger:                            var(--fields-botder-danger);
+$label:                                           var(--label);
+$validate-success:                                var(--validate-success);
+$validate-danger:                                 var(--validate-danger);
+
+$card-bg:                                         var(--card-bg);
+$card-border:                                     var(--card-border);
+
+$white:  var(--white);
+$black: var(--black);
+$gray: var(--gray);
+$green: var(--green);
+$green-gradient: var(--green-gradient);
+$light-gray: var(--light-gray);

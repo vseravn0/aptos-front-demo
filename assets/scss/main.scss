@@ -1,0 +1,16 @@
+@import './_reset.css';
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+body {
+  color: $white;
+  background: $black;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
